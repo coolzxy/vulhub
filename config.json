@@ -1,0 +1,1606 @@
+{
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "cache.db",
+      "cache_id": "my_profile2",
+      "store_fakeip": true
+    },
+    "clash_api": {
+      "external_ui": "ui",
+      "external_controller": "0.0.0.0:9090",
+      "external_ui_download_detour": "direct",
+      "default_mode": "rule",
+      "external_ui_download_url": "https://mirror.ghproxy.com/https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip"
+    }
+  },
+  "log": {
+    "disabled": true,
+    "level": "info",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "google",
+        "address": "tls://8.8.8.8",
+        "detour": "Proxy"
+      },
+      {
+        "tag": "local-dns",
+        "address": "tls://223.5.5.5",
+        "detour": "direct"
+      },
+      {
+        "tag": "fakeip-dns",
+        "address": "fakeip"
+      },
+      {
+        "tag": "block-dns",
+        "address": "rcode://success"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": "any",
+        "server": "local-dns"
+      },
+      {
+        "rule_set": [
+          "geosite-netflix",
+          "geosite-youtube",
+          "geosite-telegram",
+          "geosite-category-media",
+          "geosite-openai",
+          "geosite-speedtest",
+          "geosite-github",
+          "geosite-jetbrains",
+          "geosite-spotify",
+          "geosite-cloudflare",
+          "geosite-google"
+        ],
+        "rewrite_ttl": 1,
+        "server": "fakeip-dns"
+      },
+      {
+        "domain_suffix": [
+          "edu.cn",
+          "gov.cn",
+          "mil.cn",
+          "ac.cn",
+          "com.cn",
+          "net.cn",
+          "org.cn",
+          "中国",
+          "中國"
+        ],
+        "server": "local-dns"
+      },
+      {
+        "rule_set": [
+          "GeoIP2-CN",
+          "geosite-cn",
+          "geosite-icloud@cn",
+          "geosite-apple@cn"
+        ],
+        "server": "local-dns"
+      },
+      {
+        "query_type": [
+          "A"
+        ],
+        "rewrite_ttl": 1,
+        "server": "fakeip-dns"
+      }
+    ],
+    "strategy": "ipv4_only",
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15"
+    }
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "::",
+      "listen_port": 8888,
+      "sniff": true
+    },
+    {
+      "type": "redirect",
+      "tag": "redirect-in",
+      "listen": "::",
+      "sniff_override_destination": false,
+      "listen_port": 9887,
+      "sniff": true
+    },
+    {
+      "type": "tun",
+      "inet4_address": "172.19.0.1/30",
+      "stack": "system",
+      "sniff": true,
+      "auto_route": true,
+      "sniff_override_destination": false,
+      "gso": false
+    },
+    {
+      "type": "tproxy",
+      "tag": "tproxy-in",
+      "listen": "::",
+      "listen_port": 9888,
+      "sniff_override_destination": false,
+      "sniff": true
+    },
+    {
+      "type": "direct",
+      "listen": "::",
+      "listen_port": 53,
+      "sniff": true,
+      "tag": "dns-in"
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "Proxy",
+      "outbounds": [
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector",
+      "default": "🇭🇰 订阅1 香港"
+    },
+    {
+      "tag": "Netflix",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Youtube",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Telegram",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Category-media",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Openai",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Speedtest",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Github",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Jetbrains",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Spotify",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Cloudflare",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "Google",
+      "outbounds": [
+        "Proxy",
+        null,
+        "🇭🇰 订阅1 香港",
+        "🇺🇸 订阅1 美国",
+        "🇯🇵 订阅1 日本",
+        "🇰🇷 订阅1 韩国",
+        "🇸🇬 订阅1 新加坡",
+        "🇰🇷 订阅1 韩国",
+        "☁️ 订阅1",
+        "➜ Direct"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "🇭🇰 订阅1 香港",
+      "outbounds": [
+        "香港01{优化1|V2ray}",
+        "香港02{优化2|V2ray}",
+        "香港03{优化1|V2ray}",
+        "香港04{优化1|V2ray}",
+        "香港05{优化1|V2ray}",
+        "香港-Trojan①",
+        "香港-Trojan②",
+        "香港-Trojan③",
+        "香港-Trojan④"
+      ],
+      "type": "urltest",
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 50,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇺🇸 订阅1 美国",
+      "outbounds": [
+        "美国01{优化1|V2ray}",
+        "美国02{优化2|V2ray}",
+        "美国03{优化2|V2ray}",
+        "美国04{优化1|V2ray}",
+        "美国05{优化1|V2ray}",
+        "美国06{优化1|V2ray}",
+        "美国-Trojan"
+      ],
+      "type": "urltest",
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 50,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇯🇵 订阅1 日本",
+      "outbounds": [
+        "日本1-linode",
+        "日本2-linode",
+        "日本3-wap",
+        "日本4-wap",
+        "日本5-WAP",
+        "日本6-WAP"
+      ],
+      "type": "urltest",
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 50,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇰🇷 订阅1 韩国",
+      "outbounds": [
+        "韩国01{移动|V2ray}",
+        "韩国03{移动|V2ray}",
+        "韩国-Trojan"
+      ],
+      "type": "urltest",
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 50,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇸🇬 订阅1 新加坡",
+      "outbounds": [
+        "新加坡01{优化2|V2ray}",
+        "新加坡02{优化1|V2ray}",
+        "新加坡03{优化2|V2ray}",
+        "新加坡5-wap",
+        "新加坡6-wap"
+      ],
+      "type": "urltest",
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 50,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇰🇷 订阅1 韩国",
+      "outbounds": [
+        "韩国01{移动|V2ray}",
+        "韩国03{移动|V2ray}",
+        "韩国-Trojan"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "tag": "☁️ 订阅1",
+      "outbounds": [
+        "剩余流量：0",
+        "距离下次重置剩余：21 天",
+        "套餐到期：2024-04-16",
+        "【官网】www.awyyds.fun",
+        "近期更新请在官网重新导入订阅",
+        "台湾-Trojan①",
+        "台湾-Trojan②",
+        "日本1-linode",
+        "日本2-linode",
+        "日本3-wap",
+        "日本4-wap",
+        "日本5-WAP",
+        "日本6-WAP",
+        "新加坡01{优化2|V2ray}",
+        "新加坡02{优化1|V2ray}",
+        "新加坡03{优化2|V2ray}",
+        "新加坡5-wap",
+        "新加坡6-wap",
+        "香港01{优化1|V2ray}",
+        "香港02{优化2|V2ray}",
+        "香港03{优化1|V2ray}",
+        "香港04{优化1|V2ray}",
+        "香港05{优化1|V2ray}",
+        "香港-Trojan①",
+        "香港-Trojan②",
+        "香港-Trojan③",
+        "香港-Trojan④",
+        "美国01{优化1|V2ray}",
+        "美国02{优化2|V2ray}",
+        "美国03{优化2|V2ray}",
+        "美国04{优化1|V2ray}",
+        "美国05{优化1|V2ray}",
+        "美国06{优化1|V2ray}",
+        "美国-Trojan",
+        "英国02{移动|V2ray}",
+        "英国01{移动|V2ray}",
+        "英国-Trojan",
+        "德国01{移动|V2ray}",
+        "德国02{移动|V2ray}",
+        "德国-Trojan",
+        "印度01{移动|V2ray}",
+        "印度02{移动|V2ray}",
+        "印度-Trojan",
+        "韩国01{移动|V2ray}",
+        "韩国03{移动|V2ray}",
+        "韩国-Trojan",
+        "马来01{移动|V2ray}",
+        "马来02{移动|V2ray}",
+        "马来03{联通|V2ray}",
+        "马来04{联通|V2ray}",
+        "马来-Trojan①",
+        "马来-Trojan②",
+        "俄罗斯①{移动|V2ray}",
+        "俄罗斯-Trojan",
+        "台湾①{移动|V2ray}",
+        "台湾②{移动|V2ray}",
+        "台湾01{移动|V2ray}",
+        "台湾02{移动|V2ray}",
+        "迪拜{联通|V2ray}",
+        "泰国{移动|V2ray}",
+        "墨西哥",
+        "越南01",
+        "越南02",
+        "悉尼01",
+        "悉尼02"
+      ],
+      "interrupt_exist_connections": true,
+      "type": "selector"
+    },
+    {
+      "type": "direct",
+      "tag": "➜ Direct"
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    },
+    {
+      "detour": "🇭🇰 订阅1 香港"
+    },
+    {
+      "tag": "剩余流量：0",
+      "server": "cu.awslcn.info",
+      "server_port": 25281,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "距离下次重置剩余：21 天",
+      "server": "cu.awslcn.info",
+      "server_port": 25281,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "套餐到期：2024-04-16",
+      "server": "cu.awslcn.info",
+      "server_port": 25281,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "【官网】www.awyyds.fun",
+      "server": "cu.awslcn.info",
+      "server_port": 25281,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "近期更新请在官网重新导入订阅",
+      "server": "cu.awslcn.info",
+      "server_port": 25280,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "台湾-Trojan①",
+      "server": "tw01.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "tw01.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "台湾-Trojan②",
+      "server": "tw02.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "tw02.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "日本1-linode",
+      "server": "cu.awslcn.info",
+      "server_port": 25280,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "日本2-linode",
+      "server": "cu.awslcn.info",
+      "server_port": 25281,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "日本3-wap",
+      "server": "cu.awslcn.info",
+      "server_port": 25276,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "日本4-wap",
+      "server": "cu.awslcn.info",
+      "server_port": 25277,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "日本5-WAP",
+      "server": "cu.awslcn.info",
+      "server_port": 25278,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "日本6-WAP",
+      "server": "cu.awslcn.info",
+      "server_port": 25279,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "新加坡01{优化2|V2ray}",
+      "server": "sg1.awslcn.info",
+      "server_port": 25245,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "新加坡02{优化1|V2ray}",
+      "server": "sg1.awslcn.info",
+      "server_port": 25243,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "新加坡03{优化2|V2ray}",
+      "server": "sg1.awslcn.info",
+      "server_port": 25221,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "新加坡5-wap",
+      "server": "sg1.awslcn.info",
+      "server_port": 25282,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "新加坡6-wap",
+      "server": "sg1.awslcn.info",
+      "server_port": 25283,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "香港01{优化1|V2ray}",
+      "server": "hk1.awslcn.info",
+      "server_port": 25242,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "香港02{优化2|V2ray}",
+      "server": "hk2.awslcn.info",
+      "server_port": 25242,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "香港03{优化1|V2ray}",
+      "server": "hk1.awslcn.info",
+      "server_port": 25248,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "香港04{优化1|V2ray}",
+      "server": "hk1.awslcn.info",
+      "server_port": 25250,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "香港05{优化1|V2ray}",
+      "server": "hk1.awslcn.info",
+      "server_port": 25244,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "香港-Trojan①",
+      "server": "hk01.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "hk01.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "香港-Trojan②",
+      "server": "hk02.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "hk02.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "香港-Trojan③",
+      "server": "hk03.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "hk03.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "香港-Trojan④",
+      "server": "hk04.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "hk04.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "美国01{优化1|V2ray}",
+      "server": "us1.awslcn.info",
+      "server_port": 25238,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "美国02{优化2|V2ray}",
+      "server": "us1.awslcn.info",
+      "server_port": 25239,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "美国03{优化2|V2ray}",
+      "server": "us1.awslcn.info",
+      "server_port": 25256,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "美国04{优化1|V2ray}",
+      "server": "us2.awslcn.info",
+      "server_port": 25257,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "美国05{优化1|V2ray}",
+      "server": "us2.awslcn.info",
+      "server_port": 25260,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "美国06{优化1|V2ray}",
+      "server": "us2.awslcn.info",
+      "server_port": 25261,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "美国-Trojan",
+      "server": "us01.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "us01.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "英国02{移动|V2ray}",
+      "server": "cm1.awslcn.info",
+      "server_port": 25240,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "英国01{移动|V2ray}",
+      "server": "cm.awslcn.info",
+      "server_port": 25240,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "英国-Trojan",
+      "server": "uk01.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "uk01.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "德国01{移动|V2ray}",
+      "server": "cm1.awslcn.info",
+      "server_port": 25241,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "德国02{移动|V2ray}",
+      "server": "cm.awslcn.info",
+      "server_port": 25241,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "德国-Trojan",
+      "server": "de01.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "de01.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "印度01{移动|V2ray}",
+      "server": "cm1.awslcn.info",
+      "server_port": 25216,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "印度02{移动|V2ray}",
+      "server": "cm.awslcn.info",
+      "server_port": 25216,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "印度-Trojan",
+      "server": "in01.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "in01.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "韩国01{移动|V2ray}",
+      "server": "cm1.awslcn.info",
+      "server_port": 25218,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "韩国03{移动|V2ray}",
+      "server": "cm.awslcn.info",
+      "server_port": 25218,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "韩国-Trojan",
+      "server": "sk01.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "sk01.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "马来01{移动|V2ray}",
+      "server": "cm.awslcn.info",
+      "server_port": 25228,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "马来02{移动|V2ray}",
+      "server": "cm1.awslcn.info",
+      "server_port": 25258,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "马来03{联通|V2ray}",
+      "server": "cu.awslcn.info",
+      "server_port": 25228,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "马来04{联通|V2ray}",
+      "server": "cm.awslcn.info",
+      "server_port": 25258,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "马来-Trojan①",
+      "server": "my01.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "my01.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "马来-Trojan②",
+      "server": "my02.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "my02.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "俄罗斯①{移动|V2ray}",
+      "server": "cm1.awslcn.info",
+      "server_port": 25230,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "俄罗斯-Trojan",
+      "server": "ru01.trojanyyds.xyz",
+      "server_port": 443,
+      "type": "trojan",
+      "password": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "tls": {
+        "enabled": true,
+        "insecure": false,
+        "server_name": "ru01.trojanyyds.xyz"
+      }
+    },
+    {
+      "tag": "台湾①{移动|V2ray}",
+      "server": "cm1.awslcn.info",
+      "server_port": 25232,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "台湾②{移动|V2ray}",
+      "server": "cm.awslcn.info",
+      "server_port": 25232,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "台湾01{移动|V2ray}",
+      "server": "cm1.awslcn.info",
+      "server_port": 25233,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "台湾02{移动|V2ray}",
+      "server": "cm.awslcn.info",
+      "server_port": 25233,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "迪拜{联通|V2ray}",
+      "server": "cu.awslcn.info",
+      "server_port": 25275,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "泰国{移动|V2ray}",
+      "server": "cm.awslcn.info",
+      "server_port": 25289,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "墨西哥",
+      "server": "cu.awslcn.info",
+      "server_port": 25284,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "越南01",
+      "server": "cm1.awslcn.info",
+      "server_port": 25285,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "越南02",
+      "server": "cu.awslcn.info",
+      "server_port": 25285,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "悉尼01",
+      "server": "cm1.awslcn.info",
+      "server_port": 25286,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    },
+    {
+      "tag": "悉尼02",
+      "server": "cu.awslcn.info",
+      "server_port": 25286,
+      "type": "vmess",
+      "uuid": "99f12f07-d59a-45dd-88d5-ac58bec016ed",
+      "security": "auto",
+      "network": "tcp",
+      "alter_id": 0,
+      "transport": {
+        "type": "ws"
+      }
+    }
+  ],
+  "route": {
+    "rule_set": [
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-netflix",
+        "url": "https://wiki.jokin.uk/geo/geosite/netflix.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geoip-netflix",
+        "url": "https://wiki.jokin.uk/geo/geoip/netflix.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-youtube",
+        "url": "https://wiki.jokin.uk/geo/geosite/youtube.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-telegram",
+        "url": "https://wiki.jokin.uk/geo/geosite/telegram.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geoip-telegram",
+        "url": "https://wiki.jokin.uk/geo/geoip/telegram.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-category-media",
+        "url": "https://wiki.jokin.uk/geo/geosite/category-media.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-openai",
+        "url": "https://wiki.jokin.uk/geo/geosite/openai.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-speedtest",
+        "url": "https://wiki.jokin.uk/geo/geosite/speedtest.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-github",
+        "url": "https://wiki.jokin.uk/geo/geosite/github.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-jetbrains",
+        "url": "https://wiki.jokin.uk/geo/geosite/jetbrains.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-spotify",
+        "url": "https://wiki.jokin.uk/geo/geosite/spotify.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-cloudflare",
+        "url": "https://wiki.jokin.uk/geo/geosite/cloudflare.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geoip-cloudflare",
+        "url": "https://wiki.jokin.uk/geo/geoip/cloudflare.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-google",
+        "url": "https://wiki.jokin.uk/geo/geosite/google.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "GeoIP2-CN",
+        "url": "https://wiki.jokin.uk/cnip2.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-cn",
+        "url": "https://wiki.jokin.uk/geo/geosite/cn.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-icloud@cn",
+        "url": "https://wiki.jokin.uk/geo/geosite/icloud@cn.srs"
+      },
+      {
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "direct",
+        "tag": "geosite-apple@cn",
+        "url": "https://wiki.jokin.uk/geo/geosite/apple@cn.srs"
+      }
+    ],
+    "rules": [
+      {
+        "protocol": "dns",
+        "outbound": "dns-out"
+      },
+      {
+        "port": 53,
+        "outbound": "dns-out"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "outbound": "block"
+      },
+      {
+        "domain_suffix": [
+          "edu.cn",
+          "gov.cn",
+          "mil.cn",
+          "ac.cn",
+          "com.cn",
+          "net.cn",
+          "org.cn",
+          "中国",
+          "中國"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "Direct",
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "Global",
+        "outbound": "Proxy"
+      },
+      {
+        "rule_set": "geosite-netflix",
+        "outbound": "Netflix"
+      },
+      {
+        "rule_set": "geoip-netflix",
+        "outbound": "Netflix"
+      },
+      {
+        "rule_set": "geosite-youtube",
+        "outbound": "Youtube"
+      },
+      {
+        "rule_set": "geosite-telegram",
+        "outbound": "Telegram"
+      },
+      {
+        "rule_set": "geoip-telegram",
+        "outbound": "Telegram"
+      },
+      {
+        "rule_set": "geosite-category-media",
+        "outbound": "Category-media"
+      },
+      {
+        "rule_set": "geosite-openai",
+        "outbound": "Openai"
+      },
+      {
+        "rule_set": "geosite-speedtest",
+        "outbound": "Speedtest"
+      },
+      {
+        "rule_set": "geosite-github",
+        "outbound": "Github"
+      },
+      {
+        "rule_set": "geosite-jetbrains",
+        "outbound": "Jetbrains"
+      },
+      {
+        "rule_set": "geosite-spotify",
+        "outbound": "Spotify"
+      },
+      {
+        "rule_set": "geosite-cloudflare",
+        "outbound": "Cloudflare"
+      },
+      {
+        "rule_set": "geoip-cloudflare",
+        "outbound": "Cloudflare"
+      },
+      {
+        "rule_set": "geosite-google",
+        "outbound": "Google"
+      },
+      {
+        "rule_set": [
+          "GeoIP2-CN",
+          "geosite-cn",
+          "geosite-icloud@cn",
+          "geosite-apple@cn"
+        ],
+        "outbound": "direct"
+      }
+    ],
+    "auto_detect_interface": true,
+    "final": "Proxy"
+  }
+}
