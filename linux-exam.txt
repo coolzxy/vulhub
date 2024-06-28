@@ -1,0 +1,176 @@
+﻿import os
+import subprocess
+import re
+
+def check_directory_files():
+    score = 0
+    directory = "/tmp/web_video_service"
+    if os.path.isdir(directory):
+        score += 5
+    files = ["video1.mp4", "video2.mp4", "video3.mp4"]
+    for file in files:
+        if os.path.exists(os.path.join(directory, file)):
+            score += 3
+    if os.path.exists("/root/first_video.mp4"):
+        score += 6
+    return score
+
+def check_users():
+    score = 0
+    users = {
+        "smb100": {"home": "/home/smb100", "score": 6},
+        "exam100": {"home": "/home/exam100", "score": 8, "password": True}
+    }
+    for user, info in users.items():
+        if subprocess.run(["id", user], stdout=subprocess.DEVNULL).returncode == 0:
+            score += info["score"]
+            if info.get("password"):
+                try:
+                    with open('/etc/shadow', 'r') as shadow:
+                        for line in shadow:
+                            if line.startswith(user + ":"):
+                                encrypted_password = line.split(":")[1]
+                                if encrypted_password not in ['!', '*', '!!']:
+                                    score += 2
+                except FileNotFoundError:
+                    pass
+    return score
+
+def check_dhcp_config():
+    score = 0
+    config_file = "/etc/dhcp/dhcpd.conf"
+    try:
+        with open(config_file, 'r') as file:
+            content = file.read()
+        conditions = [
+            "subnet 192.168.30.0 netmask 255.255.255.0" in content,
+            "range 192.168.30.20 192.168.30.30;" in content,
+            "option routers 192.168.30.1;" in content,
+            "option domain-name-servers 223.6.6.6;" in content
+        ]
+        score += sum(1 for condition in conditions if condition) * 2
+        if subprocess.run(["systemctl", "is-active", "dhcpd"], stdout=subprocess.PIPE).stdout.decode().strip() == 'active':
+            score += 6
+    except FileNotFoundError:
+        pass
+    return score
+
+
+def check_samba_config():
+    """检查 Samba 配置是否正确，包括用户添加、配置文件设置和服务状态。"""
+    score = 0
+
+    # 检查用户 smbuser1 是否已创建并添加到 Samba
+    user_check = subprocess.run(["id", "smbuser1"], stdout=subprocess.DEVNULL).returncode == 0
+    samba_user_check = subprocess.run(["pdbedit", "-L"], stdout=subprocess.PIPE).stdout.decode().find("smbuser1") != -1
+    if user_check and samba_user_check:
+        score += 5
+
+    # 检查共享配置
+    samba_conf = "/etc/samba/smb.conf"
+    try:
+        with open(samba_conf, 'r') as file:
+            content = file.read()
+        if "[share]" in content:
+            share_config = content.split("[share]")[1].split("[")[0]
+            required_configs = {
+                "path": "/samba/share",
+                "writable": "yes",
+                "browsable": "yes",
+                "valid users": "smbuser1",
+                "create mask": "0777",
+                "directory mask": "0777"
+            }
+            for key, expected_value in required_configs.items():
+                # Use a regular expression to find key-value pairs and normalize spaces
+                pattern = fr"{key}\s*=\s*{expected_value}"
+                if re.search(pattern, share_config, re.IGNORECASE):
+                    score += 2
+    except FileNotFoundError:
+        print("Samba配置文件未找到")
+
+    # 检查配置文件是否已备份
+    if os.path.exists("/etc/samba/smb.conf.bak"):
+        score += 2
+
+    # 检查 Samba 服务是否启动
+    if subprocess.run(["systemctl", "is-active", "smb"], stdout=subprocess.PIPE).stdout.decode().strip() == 'active':
+        score += 3
+
+    return score
+
+
+
+def check_httpd_config():
+    score = 0
+    # 列出所有相关配置文件，包括主配置文件
+    config_files = ["/etc/httpd/conf/httpd.conf"] + [os.path.join("/etc/httpd/conf.d", f) for f in os.listdir("/etc/httpd/conf.d") if f.endswith('.conf')]
+    
+    try:
+        for file_name in config_files:
+            with open(file_name, 'r') as file:
+                content = file.read()
+                if "ServerName example.com" in content and "DocumentRoot /var/www/example" in content:
+                    score += 7
+                    break
+        if subprocess.run(["systemctl", "is-active", "httpd"], stdout=subprocess.PIPE).stdout.decode().strip() == 'active':
+            score += 3
+    except Exception as e:
+        pass  # 在实际环境中，你可能想要处理或记录异常
+    
+    return score
+
+
+
+
+def check_nfs_config():
+    score = 0
+    export_dir = "/srv/nfs/sharedir"
+    if os.path.isdir(export_dir):
+        score += 3
+    exports_file = "/etc/exports"
+    try:
+        with open(exports_file, 'r') as file:
+            content = file.read()
+        if "/srv/nfs/sharedir 192.168.30.0/24(rw,sync,noroot_squash)" in content:
+            score += 4
+        if subprocess.run(["systemctl", "is-active", "nfs-server"], stdout=subprocess.PIPE).stdout.decode().strip() == 'active':
+            score += 3
+    except FileNotFoundError:
+        pass
+    return score
+
+def check_firewalld_config():
+    score = 0
+    services = ["dhcp", "samba", "http", "nfs"]
+    for service in services:
+        if subprocess.run(["firewall-cmd", "--query-service", service], stdout=subprocess.PIPE).stdout.decode().strip() == "yes":
+            score += 1
+    if subprocess.run(["systemctl", "is-enabled", "firewalld"], stdout=subprocess.PIPE).stdout.decode().strip() == 'enabled':
+        score += 2
+    return score
+
+def main():
+    total_score = 0
+    total_score += check_directory_files()
+    total_score += check_users()
+    total_score += check_dhcp_config()
+    total_score += check_samba_config()
+    total_score += check_httpd_config()
+    total_score += check_nfs_config()
+    total_score += check_firewalld_config()
+    
+    if total_score >= 90:
+        encouragement = "表现优秀！继续保持！"
+    elif total_score >= 70:
+        encouragement = "做得不错，再接再厉！"
+    elif total_score >= 50:
+        encouragement = "还有提升空间，继续努力！"
+    else:
+        encouragement = "需要更加努力哦，不要气馁！"
+
+    print(f"总分: {total_score}/100分。{encouragement}")
+
+
+if __name__ == "__main__":
+    main()
